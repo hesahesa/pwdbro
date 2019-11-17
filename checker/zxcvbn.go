@@ -18,8 +18,8 @@ func (z *Zxcvbn) CheckPassword(pwd string) (bool, string, error) {
 
 	// password is safe if the zxcvbn score is >= 3
 	if res.Score >= 3 {
-		return true, "the score is" + strconv.Itoa(res.Score), nil
+		return true, "the score is " + strconv.Itoa(res.Score), nil
 	}
 
-	return false, "the score is" + strconv.Itoa(res.Score), nil
+	return false, "the score is " + strconv.Itoa(res.Score), nil
 }
