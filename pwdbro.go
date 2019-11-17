@@ -46,6 +46,7 @@ func NewDefaultPwdBro() *PwdBro {
 	}
 	pwdb.AddChecker(&checker.NonEmpty{})
 	pwdb.AddChecker(&checker.Pwnedpasswords{})
+	pwdb.AddChecker(&checker.Zxcvbn{})
 
 	return pwdb
 }

@@ -8,6 +8,6 @@ import (
 
 func main() {
 	pwdbro := pwdbro.NewDefaultPwdBro()
-	status, _ := pwdbro.RunChecks("")
-	fmt.Println(status[0], status[1])
+	status, _ := pwdbro.RunChecks("wrewtjsdvou30irpfwefi0")
+	fmt.Println(status[0], status[1], status[2])
 }

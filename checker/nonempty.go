@@ -12,7 +12,7 @@ func (n *NonEmpty) MethodName() string {
 func (n *NonEmpty) CheckPassword(pwd string) (bool, string, error) {
 	if utf8.RuneCountInString(pwd) > 0 {
 		return true, "", nil
-	} else {
-		return false, "Character count should be more than 0", nil
 	}
+
+	return false, "Character count should be more than 0", nil
 }
