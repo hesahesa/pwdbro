@@ -36,13 +36,13 @@ type PwdChecker interface {
 
 // PwdBro is a struct to hold pwdbro instance
 type PwdBro struct {
-	pwdCheckers []PwdChecker
+	pwdCheckers map[string]PwdChecker
 }
 
 // NewDefaultPwdBro return an instance of PwdBro with default checking mechanisms
 func NewDefaultPwdBro() *PwdBro {
 	pwdb := &PwdBro{
-		pwdCheckers: make([]PwdChecker, 0),
+		pwdCheckers: make(map[string]PwdChecker),
 	}
 	pwdb.AddChecker(&checker.NonEmpty{})
 	pwdb.AddChecker(&checker.Pwnedpasswords{})
@@ -53,7 +53,7 @@ func NewDefaultPwdBro() *PwdBro {
 
 // AddChecker add a PwdChecker to the list of method of pwdbro
 func (pwdb *PwdBro) AddChecker(c PwdChecker) error {
-	pwdb.pwdCheckers = append(pwdb.pwdCheckers, c)
+	pwdb.pwdCheckers[c.MethodName()] = c
 	return nil
 }
 
