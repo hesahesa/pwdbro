@@ -14,7 +14,7 @@ func (n *NonEmpty) MethodName() string {
 }
 
 // CheckPassword returns true if the character count of a string
-// is more than one
+// is more than or equal to one
 func (n *NonEmpty) CheckPassword(pwd string) (bool, string, error) {
 	if utf8.RuneCountInString(pwd) > 0 {
 		return true, "", nil
