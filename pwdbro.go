@@ -51,6 +51,16 @@ func NewDefaultPwdBro() *PwdBro {
 	return pwdb
 }
 
+// NewEmptyPwdBro return an instance of PwdBro without no checking mechanism
+// you could add your desired checker by using AddChecker() method
+func NewEmptyPwdBro() *PwdBro {
+	pwdb := &PwdBro{
+		pwdCheckers: make(map[string]PwdChecker),
+	}
+
+	return pwdb
+}
+
 // AddChecker add a PwdChecker to the list of method of pwdbro
 func (pwdb *PwdBro) AddChecker(c PwdChecker) error {
 	pwdb.pwdCheckers[c.MethodName()] = c

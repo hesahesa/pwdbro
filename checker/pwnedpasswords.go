@@ -13,21 +13,35 @@ import (
 	"github.com/pkg/errors"
 )
 
+// Pwnedpasswords is a checker struct that will call pwnedpasswords API
+// to determine if a password is within the database of leaked password
+// or not
 type Pwnedpasswords struct {
-	httpClient *http.Client
+	// HTTPClient is the http.Client that is being used to make an API call
+	HTTPClient *http.Client
 }
 
 const baseURL = "https://api.pwnedpasswords.com/range/"
 
 var (
+	// ErrStringEmpty is an error if the string is an empty string
 	ErrStringEmpty = errors.New("Empty password string error")
-	ErrNonHTTPOk   = errors.New("Non HTTP OK in API Call")
+	// ErrNonHTTPOk is an error if the resulting HTTP call to the API is non 200 OK
+	ErrNonHTTPOk = errors.New("Non HTTP OK in API Call")
 )
 
+// MethodName returns the method name of the checker
 func (pp *Pwnedpasswords) MethodName() string {
 	return "pwnedpasswords API"
 }
 
+// CheckPassword will call pwnedpasswords API to determine if a supplied
+// password is in the database of password leak or not.
+// The supplied password is NOT being sent to the pwnedpasswords API, instead
+// only the SHA1 prefix (5 first hash char) is sent, this ensures that
+// the pwnedpasswords API doesn't know the password that is being sent
+// (it is protected in k-anonymity guarantee).
+// Refer to https://haveibeenpwned.com/API/v3#PwnedPasswords for more details.
 func (pp *Pwnedpasswords) CheckPassword(pwd string) (bool, string, error) {
 	// error if rune count is 0 (or less ?)
 	if utf8.RuneCountInString(pwd) <= 0 {
@@ -35,8 +49,8 @@ func (pp *Pwnedpasswords) CheckPassword(pwd string) (bool, string, error) {
 	}
 
 	// construct a new http.Client if not already supplied
-	if pp.httpClient == nil {
-		pp.httpClient = &http.Client{
+	if pp.HTTPClient == nil {
+		pp.HTTPClient = &http.Client{
 			Timeout: 5 * time.Second,
 		}
 	}
@@ -60,7 +74,7 @@ func (pp *Pwnedpasswords) CheckPassword(pwd string) (bool, string, error) {
 	// be a friendly client and tell the API who are you
 	req.Header.Set("User-Agent", "github.com/hesahesa/pwdbro")
 
-	resp, err := pp.httpClient.Do(req)
+	resp, err := pp.HTTPClient.Do(req)
 	if err != nil {
 		return false, "", errors.Wrap(err, "http api call failure")
 	}

@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	// this is the example usages of pwdbro
+
 	pwdbro := pwdbro.NewDefaultPwdBro()
 	status, _ := pwdbro.RunParallelChecks("password")
 	for _, resp := range status {
