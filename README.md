@@ -49,16 +49,16 @@ for _, resp := range status {
 
 To implement your own checking mechanism, you need to create a struct that implements pwdbro.PwdChecker interface, for example:
 ```go
-type MyCheker struct {
+type MyChecker struct {
 }
 
 // MethodName returns the method name of this checker
-func (m *MyCheker) MethodName() string {
+func (m *MyChecker) MethodName() string {
 	return "My Checker Method Name"
 }
 
 // CheckPassword returns true if the supplied string is "safe" to use as password
-func (m *MyCheker) CheckPassword(pwd string) (bool, string, error) {
+func (m *MyChecker) CheckPassword(pwd string) (bool, string, error) {
 	// implements your password checking logic in here
 }
 ```
