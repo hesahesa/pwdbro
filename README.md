@@ -53,12 +53,12 @@ type MyCheker struct {
 }
 
 // MethodName returns the method name of this checker
-func (n *NonEmpty) MethodName() string {
+func (m *MyCheker) MethodName() string {
 	return "My Checker Method Name"
 }
 
 // CheckPassword returns true if the supplied string is "safe" to use as password
-func (n *NonEmpty) CheckPassword(pwd string) (bool, string, error) {
+func (m *MyCheker) CheckPassword(pwd string) (bool, string, error) {
 	// implements your password checking logic in here
 }
 ```
